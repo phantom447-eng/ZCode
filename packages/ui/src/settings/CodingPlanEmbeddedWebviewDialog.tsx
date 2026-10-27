@@ -93,7 +93,7 @@ export function CodingPlanEmbeddedWebviewDialog({
   const onOpenResultRef = useRef(onOpenResult);
   onOpenResultRef.current = onOpenResult;
   // 当前 locale 作为 webview 语言 hint / 注入值；Locale 与 CodingPlanWebviewLocale 同构。
-  const webviewLocale = locale;
+  const webviewLocale = locale === "ru-RU" ? "en-US" : locale;
   const webviewCleanupRef = useRef<(() => void) | null>(null);
   // webview 是否已 dom-ready：executeJavaScript 只在 ready 后调用，
   // 否则会抛 "WebView must be attached to the DOM and dom-ready emitted"。

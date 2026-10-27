@@ -147,7 +147,7 @@ const envelope = z.object({
   code: z.literal(0),
   data: z.object({
     server_time: z.number().finite(),
-    language: z.enum(["zh-CN", "en-US"]),
+    language: z.enum(["zh-CN", "en-US", "ru-RU"]),
     deliveries: z.array(z.unknown()).max(32),
   }),
 });

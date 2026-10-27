@@ -32,7 +32,7 @@ export function MarketingDialogs({ controller }: { controller: MarketingTouchCon
     dialog && content
       ? adaptMarketingPopup(
           dialog.delivery.campaign_id,
-          locale,
+          locale === "ru-RU" ? "en-US" : locale,
           content,
           dialog.hero,
           intl.formatMessage({ id: "manualClaimPlan.claim.dialog.modelSettings" }),

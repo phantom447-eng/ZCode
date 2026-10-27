@@ -87,14 +87,16 @@ export function MarketingTouchProvider({
   const refreshStartEntitlementRef = useRef(startEntitlement.refresh);
   refreshStartEntitlementRef.current = startEntitlement.refresh;
   const identity = user?.id ?? "anonymous";
+  // Кампании сервера локализованы только на zh/en; для ru используем en.
+  const marketingLocale = locale === "ru-RU" ? "en-US" : locale;
   const createRuntime = useCallback(() => {
     const service = services.marketingTouchService;
     if (!service || restoring) return null;
     let poller: ReturnType<typeof createMarketingTouchPoller>;
     const controller = createMarketingTouchController({
-      query: () => service.query({ locale }),
+      query: () => service.query({ locale: marketingLocale }),
       report: (input) => service.report(input),
-      locale,
+      locale: marketingLocale,
       canOpen: canOpenMarketingPopup,
       refresh: () => poller.refresh(),
       prepare: async (delivery) => {
@@ -103,10 +105,10 @@ export function MarketingTouchProvider({
           delivery.resource_position === "banner"
             ? delivery.banner.success_popup?.hero
             : delivery.popup.hero;
-        const success = prepareMarketingHero(visual, assets, locale, desktop);
+        const success = prepareMarketingHero(visual, assets, marketingLocale, desktop);
         const background =
           delivery.resource_position === "banner"
-            ? prepareMarketingHero(delivery.banner.background, assets, locale, desktop)
+            ? prepareMarketingHero(delivery.banner.background, assets, marketingLocale, desktop)
             : undefined;
         let released = false;
         const release = async () => {

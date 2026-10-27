@@ -53,13 +53,14 @@ export async function startSimplifiedFeedbackSubmission({
   ticketSeverity: FeedbackTicketSeverity;
   ticketModule: FeedbackTicketModule;
   modelContext: FeedbackAgentModelContext;
-  locale: "zh-CN" | "en-US";
+  locale: "zh-CN" | "en-US" | "ru-RU";
   copy: FeedbackSubmissionCopy;
   formatMessage: (descriptor: { id: string }, values?: Record<string, string>) => string;
   onTicketCreated?: (ticketId: string) => void;
   onCompleted: (ticketId: string) => void;
   onError: (message: string) => void;
 }): Promise<FeedbackSubmissionJob> {
+  const feedbackLocale = locale === "ru-RU" ? "en-US" : locale;
   const device = await feedbackService.getDeviceSnapshot();
   const framework = DEFAULT_FEEDBACK_TICKET_FRAMEWORK;
   const normalizedDescription = description.trim();
@@ -101,7 +102,7 @@ export async function startSimplifiedFeedbackSubmission({
       },
       source: "desktop-app",
       contact: trimmedContact || undefined,
-      locale,
+      locale: feedbackLocale,
     },
     screenshots: attachmentDrafts,
     includeLogs,

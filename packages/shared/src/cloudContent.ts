@@ -91,7 +91,7 @@ export const cloudContentPayloadSchema = z
     id,
     revision: z.number().int().positive(),
     kind: z.enum(["campaign", "feature", "notice"]),
-    locale: z.enum(["zh-CN", "en-US"]),
+    locale: z.enum(["zh-CN", "en-US", "ru-RU"]),
     dialog: z.object({
       title: z.string().min(1).max(500),
       description: z.object({

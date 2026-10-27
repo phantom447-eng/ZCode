@@ -297,10 +297,10 @@ export class ProviderTemplate {
 export function resolveProviderTemplateName(
   templateId: ProviderTemplateId,
   template: Pick<ProviderTemplate, "templateNameMap">,
-  locale: ProviderTemplateLocale,
+  locale: ProviderTemplateLocale | "ru-RU",
 ): string {
   return (
-    template.templateNameMap[locale]?.trim() ||
+    (template.templateNameMap as Partial<Record<string, string>>)[locale]?.trim() ||
     template.templateNameMap["en-US"]?.trim() ||
     templateId
   );
